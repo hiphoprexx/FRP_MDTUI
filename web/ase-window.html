@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASE - Speed Enforcement</title>
+    <link rel="stylesheet" href="ase-styles.css">
+</head>
+<body>
+    <!-- ASE Speed Enforcement Window -->
+    <div id="ase-window" class="ase-window" style="display: none;">
+        <!-- Header -->
+        <div class="ase-header">
+            <div class="ase-title">
+                <div class="ase-icon">📡</div>
+                <div class="ase-title-text">SPEED ENFORCEMENT</div>
+            </div>
+            <div class="ase-controls">
+                <button class="ase-btn power-btn" id="ase-power-btn">
+                    <span class="btn-icon">⚡</span>
+                    <span class="btn-text">POWER</span>
+                </button>
+                <button class="ase-btn close-btn" id="ase-close-btn">×</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="ase-content">
+            <!-- Radar Gun Display -->
+            <div class="radar-display">
+                <!-- Front Section -->
+                <div class="radar-section front-section">
+                    <div class="section-label">FRONT</div>
+                    <div class="speed-readout">
+                        <div class="digital-display" id="front-speed">000</div>
+                    </div>
+                </div>
+
+                <!-- Rear Section -->
+                <div class="radar-section rear-section">
+                    <div class="section-label">REAR</div>
+                    <div class="speed-readout">
+                        <div class="digital-display" id="rear-speed">000</div>
+                    </div>
+                </div>
+
+                <!-- Patrol Speed Section -->
+                <div class="radar-section patrol-section">
+                    <div class="patrol-label">PATROL SPEED</div>
+                    <div class="patrol-readout">
+                        <div class="digital-display patrol-display" id="patrol-speed">000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plate Reader Section -->
+            <div class="plate-section">
+                <div class="plate-reader">
+                    <div class="plate-display">
+                        <div class="plate-container">
+                            <img src="plates/BlueOnWhite1.png" alt="License Plate" class="plate-background">
+                            <div class="plate-glyphs" id="plate-glyphs"></div>
+                        </div>
+                    </div>
+                    <div class="plate-info">
+                        <div class="plate-text" id="plate-text">NO PLATE</div>
+                        <div class="plate-source" id="plate-source">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Indicators -->
+            <div class="status-section">
+                <div class="status-indicators">
+                    <div class="status-item">
+                        <div class="status-dot" id="radar-status-dot"></div>
+                        <span class="status-text">RADAR</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-dot" id="laser-status-dot"></div>
+                        <span class="status-text">LASER</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-dot" id="plate-status-dot"></div>
+                        <span class="status-text">ALPR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resize Handle -->
+        <div class="ase-resize-handle"></div>
+    </div>
+
+    <script src="ase-window.js"></script>
+</body>
+</html>

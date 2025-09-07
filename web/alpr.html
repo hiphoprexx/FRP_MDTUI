@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPR System - LSPD Computer Interface</title>
+    <link rel="stylesheet" href="alpr-styles.css">
+</head>
+<body>
+    <div class="alpr-container" id="alpr-container">
+        <!-- Header -->
+        <div class="alpr-header">
+            <div class="header-left">
+                <div class="alpr-logo">
+                    <div class="logo-icon">📡</div>
+                    <div class="logo-text">
+                        <div class="main-title">ALPR SYSTEM</div>
+                        <div class="unit-label" id="unit-label">Unit 1-LINCOLN-18</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="status-badge" id="status-badge">
+                    <div class="status-dot"></div>
+                    <span class="status-text" id="status-text">OFFLINE</span>
+                </div>
+                <div class="plates-count">
+                    <span class="count-text" id="plates-count">0 plates scanned</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button class="control-btn start-stop" id="start-stop-btn">
+                    <span class="btn-text">START</span>
+                </button>
+                <button class="control-btn minimize" id="minimize-btn" title="Minimize">−</button>
+                <button class="control-btn close" id="close-btn" title="Close">×</button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="alpr-main-content">
+            <!-- Vehicle Display Panel -->
+            <div class="vehicle-panel">
+                <div class="vehicle-container">
+                    <img src="INTERFACE/vehiclealprinterface.png" alt="Patrol Vehicle" class="vehicle-image" id="vehicle-image">
+                    <div class="radar-dots">
+                        <div class="radar-dot front" id="front-radar">
+                            <div class="radar-pulse"></div>
+                        </div>
+                        <div class="radar-dot rear" id="rear-radar">
+                            <div class="radar-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-info">
+                    <div class="info-row">
+                        <span class="info-label">PATROL VEHICLE</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">GPS: <span id="gps-coords">-</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plates List Panel -->
+            <div class="plates-panel">
+                <div class="plates-header">
+                    <div class="plates-title">SELECTED PLATE</div>
+                    <button class="vehicle-info-btn" id="vehicle-info-btn" disabled>
+                        <span class="btn-icon">ℹ️</span>
+                        <span class="btn-text">Vehicle Info</span>
+                    </button>
+                </div>
+                <div class="plates-list" id="plates-list">
+                    <div class="no-plates-message">
+                        <div class="no-plates-icon">🚗</div>
+                        <div class="no-plates-text">No plates detected</div>
+                        <div class="no-plates-subtext">Drive near vehicles to scan</div>
+                    </div>
+                </div>
+                <!-- Selected plate preview under the list -->
+                <div class="selected-plate-preview">
+                    <div class="plate-container">
+                        <img src="plates/BlueOnWhite1.png" alt="License Plate" class="plate-background" id="plate-bg">
+                        <div class="plate-glyphs" id="plate-glyphs" aria-label="Selected plate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimized Bar -->
+    <div class="minimized-bar" id="minimized-bar" style="display: none;">
+        <div class="minimized-content">
+            <div class="minimized-status">
+                <div class="status-dot" id="minimized-status-dot"></div>
+                <span class="status-text" id="minimized-status-text">OFFLINE</span>
+            </div>
+            <div class="minimized-count">
+                <span class="count-text">Plates: </span>
+                <span class="count-number" id="minimized-count">0</span>
+            </div>
+            <button class="restore-btn" id="restore-btn">Open</button>
+        </div>
+    </div>
+
+    <script src="alpr-app.js"></script>
+</body>
+</html>

@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
 
 #ase-window {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
+  width: 360px;
   background: rgba(11,26,54,0.95);
   border: 1px solid rgba(42,63,95,0.8);
   border-radius: 8px;
@@ -24,18 +24,24 @@
   border-bottom: 1px solid rgba(42,63,95,0.8);
 }
 
-#ase-window .ase-header .title {
+#ase-window .ase-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#ase-window .ase-title-text {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .5px;
 }
 
-#ase-window .ase-header .ase-controls {
+#ase-window .ase-controls {
   display: flex;
   gap: 6px;
 }
 
-#ase-window .ase-header button {
+#ase-window .ase-btn {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
   color: #fff;
@@ -43,38 +49,43 @@
   padding: 2px 6px;
   border-radius: 3px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-#ase-window .ase-header #ase-mode-btn.laser {
-  background: rgba(0,150,255,0.3);
-  border-color: rgba(0,150,255,0.6);
-}
-
-#ase-window .ase-header .close-btn {
+#ase-window .ase-btn.close-btn {
   font-size: 14px;
   line-height: 1;
 }
 
-#ase-window .radar {
-  display: flex;
+#ase-window .ase-btn.mode-btn.laser {
+  background: rgba(0,150,255,0.3);
+  border-color: rgba(0,150,255,0.6);
+}
+
+#ase-window .ase-content {
   padding: 10px;
-  gap: 10px;
   background: rgba(0,0,0,0.3);
 }
 
-#ase-window .section {
+#ase-window .radar-display {
+  display: flex;
+  gap: 10px;
+}
+
+#ase-window .radar-section {
   flex: 1;
   text-align: center;
 }
 
-#ase-window .label {
+#ase-window .section-label {
   font-size: 10px;
   font-weight: 600;
   margin-bottom: 4px;
-  display: block;
 }
 
-#ase-window .digits {
+#ase-window .digital-display {
   font-family: 'Courier New', monospace;
   font-size: 32px;
   background: #000;
@@ -85,7 +96,7 @@
   text-shadow: 0 0 10px rgba(255,107,53,0.6);
 }
 
-#ase-window .digits.green {
+#ase-window .digital-display.patrol-display {
   color: #00ff66;
   text-shadow: 0 0 10px rgba(0,255,102,0.5);
 }
@@ -93,7 +104,7 @@
 #ase-window .lane-selector {
   display: flex;
   gap: 6px;
-  padding: 8px 10px 10px;
+  margin-top: 10px;
   justify-content: center;
 }
 

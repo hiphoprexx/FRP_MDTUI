@@ -53,8 +53,18 @@
                 </div>
             </div>
 
-            <!-- Plate Reader Section -->
-            <div class="plate-section">
+            <!-- Lane Selector -->
+            <div class="lane-selector">
+                <button class="lane-btn" data-lane="1">1</button>
+                <button class="lane-btn" data-lane="2">2</button>
+                <button class="lane-btn" data-lane="3">3</button>
+                <button class="lane-btn" data-lane="4">4</button>
+                <button class="lane-btn" data-lane="5">5</button>
+                <button class="lane-btn" data-lane="6">6</button>
+            </div>
+
+            <!-- Hidden Plate Reader Section for compatibility -->
+            <div class="plate-section" style="display: none;">
                 <div class="plate-reader">
                     <div class="plate-display">
                         <div class="plate-container">
@@ -69,8 +79,8 @@
                 </div>
             </div>
 
-            <!-- Status Indicators -->
-            <div class="status-section">
+            <!-- Hidden Status Indicators for compatibility -->
+            <div class="status-section" style="display: none;">
                 <div class="status-indicators">
                     <div class="status-item">
                         <div class="status-dot" id="radar-status-dot"></div>
@@ -86,10 +96,8 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Resize Handle -->
-        <div class="ase-resize-handle"></div>
+        </div>
     </div>
 
     <script src="ase-window.js"></script>

@@ -1,411 +1,109 @@
-/* ASE Speed Enforcement Window - Compact Modern LSPD Design */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
+/* ASE Speed Enforcement window */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+#ase-window {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: rgba(11,26,54,0.95);
+  border: 1px solid rgba(42,63,95,0.8);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Roboto Condensed', sans-serif;
+  z-index: 1000;
 }
 
-body {
-    font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: transparent;
-    overflow: hidden;
-    user-select: none;
+#ase-window .ase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(30,58,138,0.9);
+  border-bottom: 1px solid rgba(42,63,95,0.8);
 }
 
-.ase-window {
-    position: fixed;
-    width: 320px;
-    height: 200px;
-    background: linear-gradient(135deg, rgba(11, 26, 54, 0.95) 0%, rgba(26, 35, 50, 0.95) 50%, rgba(15, 20, 25, 0.95) 100%);
-    border: 1px solid rgba(42, 63, 95, 0.8);
-    border-radius: 8px;
-    box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    cursor: default;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    z-index: 1000;
+#ase-window .ase-header .title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .5px;
 }
 
-.ase-window.interactive {
-    cursor: move;
+#ase-window .ase-header .ase-controls {
+  display: flex;
+  gap: 6px;
 }
 
-/* Header */
-.ase-header {
-    background: linear-gradient(90deg, rgba(11, 26, 54, 0.9) 0%, rgba(30, 58, 138, 0.9) 50%, rgba(11, 26, 54, 0.9) 100%);
-    padding: 8px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(42, 63, 95, 0.6);
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+#ase-window .ase-header button {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
-.ase-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+#ase-window .ase-header .close-btn {
+  font-size: 14px;
+  line-height: 1;
 }
 
-.ase-icon {
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+#ase-window .radar {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  background: rgba(0,0,0,0.3);
 }
 
-.ase-title-text {
-    font-size: 12px;
-    font-weight: 600;
-    color: #eaeaea;
-    letter-spacing: 0.5px;
+#ase-window .section {
+  flex: 1;
+  text-align: center;
 }
 
-.ase-controls {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+#ase-window .label {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
 }
 
-.ase-btn {
-    padding: 4px 8px;
-    border: none;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #eaeaea;
-    font-size: 10px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+#ase-window .digits {
+  font-family: 'Courier New', monospace;
+  font-size: 32px;
+  background: #000;
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #ff6b35;
+  text-shadow: 0 0 10px rgba(255,107,53,0.6);
 }
 
-.ase-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+#ase-window .digits.green {
+  color: #00ff66;
+  text-shadow: 0 0 10px rgba(0,255,102,0.5);
 }
 
-.ase-btn.active {
-    background: rgba(0, 150, 255, 0.3);
-    border-color: rgba(0, 150, 255, 0.5);
-    box-shadow: 0 0 8px rgba(0, 150, 255, 0.3);
+#ase-window .lane-selector {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px 10px;
+  justify-content: center;
 }
 
-.close-btn {
-    background: rgba(255, 100, 100, 0.2);
-    border-color: rgba(255, 100, 100, 0.4);
-    font-size: 14px;
-    padding: 2px 6px;
+#ase-window .lane-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 0;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.close-btn:hover {
-    background: rgba(255, 100, 100, 0.4);
-}
-
-/* Main Content */
-.ase-content {
-    padding: 12px;
-    height: calc(100% - 40px);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-/* Radar Gun Display */
-.radar-display {
-    flex: 1;
-    display: flex;
-    gap: 8px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(42, 63, 95, 0.6);
-    border-radius: 4px;
-    padding: 8px;
-}
-
-.radar-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.section-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    text-align: center;
-}
-
-.speed-readout {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.digital-display {
-    font-family: 'Courier New', monospace;
-    font-size: 28px;
-    font-weight: 700;
-    color: #ff6b35;
-    text-align: center;
-    line-height: 1;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #333;
-    border-radius: 4px;
-    padding: 4px 8px;
-    min-width: 60px;
-    text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.patrol-section {
-    background: rgba(0, 50, 0, 0.2);
-    border: 1px solid rgba(0, 100, 0, 0.4);
-    border-radius: 4px;
-    padding: 8px;
-}
-
-.patrol-label {
-    font-size: 8px;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    text-align: center;
-}
-
-.patrol-readout {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.patrol-display {
-    color: #00ff00;
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    background: rgba(0, 0, 0, 0.9);
-    border-color: #00aa00;
-}
-
-/* Speed color coding */
-.digital-display.under-limit {
-    color: #4ade80;
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
-}
-
-.digital-display.close-limit {
-    color: #fbbf24;
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-}
-
-.digital-display.over-limit {
-    color: #ff4444;
-    text-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
-    animation: pulse-red 1s infinite;
-}
-
-@keyframes pulse-red {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-/* Plate Section */
-.plate-section {
-    height: 40px;
-}
-
-.plate-reader {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 100%;
-}
-
-.plate-display {
-    flex-shrink: 0;
-}
-
-.plate-container {
-    position: relative;
-    width: 80px;
-    height: 24px;
-}
-
-.plate-background {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2px;
-}
-
-.plate-glyphs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1px;
-}
-
-.plate-glyphs .glyph {
-    width: 8px;
-    height: 16px;
-    object-fit: contain;
-}
-
-.plate-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.plate-text {
-    font-size: 12px;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: 1px;
-    margin-bottom: 2px;
-}
-
-.plate-source {
-    font-size: 8px;
-    color: #888;
-    font-weight: 500;
-}
-
-/* Status Section */
-.status-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 20px;
-}
-
-.status-indicators {
-    display: flex;
-    gap: 8px;
-}
-
-.status-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #444;
-    border: 1px solid #666;
-}
-
-.status-dot.active {
-    background: #4ade80;
-    border-color: #22c55e;
-    box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
-}
-
-.status-dot.scanning {
-    background: #fbbf24;
-    border-color: #f59e0b;
-    animation: pulse-yellow 1s infinite;
-}
-
-@keyframes pulse-yellow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-}
-
-.status-text {
-    font-size: 8px;
-    color: #b0b0b0;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-.patrol-speed {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 8px;
-    color: #888;
-}
-
-.patrol-label {
-    font-weight: 500;
-}
-
-.patrol-value {
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.patrol-unit {
-    font-weight: 500;
-}
-
-/* Resize Handle */
-.ase-resize-handle {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 12px;
-    height: 12px;
-    background: linear-gradient(-45deg, transparent 0%, transparent 30%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.1) 70%, transparent 70%);
-    cursor: se-resize;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.ase-window:hover .ase-resize-handle {
-    opacity: 1;
-}
-
-/* Drag functionality */
-.ase-window.dragging {
-    cursor: move !important;
-}
-
-/* Responsive adjustments */
-@media (max-width: 400px) {
-    .ase-window {
-        width: 280px;
-        height: 180px;
-    }
-    
-    .speed-display {
-        font-size: 20px;
-    }
-    
-    .plate-container {
-        width: 70px;
-        height: 20px;
-    }
+#ase-window .lane-btn.active {
+  background: rgba(0,150,255,0.3);
+  border-color: rgba(0,150,255,0.6);
 }

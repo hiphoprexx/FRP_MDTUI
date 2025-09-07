@@ -3,6 +3,7 @@ class ASEWindow {
     this.isOpen = false;
     this.isActive = false;
     this.selectedLane = null;
+    this.mode = 'RADAR';
 
     this.initElements();
     this.setupListeners();
@@ -14,15 +15,18 @@ class ASEWindow {
     this.window = document.getElementById('ase-window');
     this.powerBtn = document.getElementById('ase-power-btn');
     this.closeBtn = document.getElementById('ase-close-btn');
+    this.modeBtn = document.getElementById('ase-mode-btn');
     this.frontSpeed = document.getElementById('front-speed');
     this.rearSpeed = document.getElementById('rear-speed');
     this.patrolSpeed = document.getElementById('patrol-speed');
     this.laneButtons = document.querySelectorAll('.lane-btn');
+    this.laneSelector = document.querySelector('.lane-selector');
   }
 
   setupListeners() {
     this.powerBtn.addEventListener('click', () => this.togglePower());
     this.closeBtn.addEventListener('click', () => this.close());
+    this.modeBtn.addEventListener('click', () => this.toggleMode());
 
     this.laneButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -39,6 +43,9 @@ class ASEWindow {
           break;
         case 'p':
           this.togglePower();
+          break;
+        case 'l':
+          this.toggleMode();
           break;
         case '1': case '2': case '3': case '4': case '5': case '6':
           this.selectLane(parseInt(e.key));
@@ -116,7 +123,20 @@ class ASEWindow {
     this.sendNui('asePowerToggle', { active: this.isActive });
   }
 
+  toggleMode() {
+    this.mode = this.mode === 'RADAR' ? 'LASER' : 'RADAR';
+    this.modeBtn.textContent = this.mode;
+    this.modeBtn.classList.toggle('laser', this.mode === 'LASER');
+    this.laneSelector.classList.toggle('hidden', this.mode !== 'LASER');
+    if (this.mode !== 'LASER') {
+      this.selectedLane = null;
+      this.laneButtons.forEach(btn => btn.classList.remove('active'));
+    }
+    this.sendNui('aseModeChange', { mode: this.mode });
+  }
+
   selectLane(lane) {
+    if (this.mode !== 'LASER') return;
     this.selectedLane = this.selectedLane === lane ? null : lane;
     this.laneButtons.forEach(btn => {
       btn.classList.toggle('active', parseInt(btn.dataset.lane) === this.selectedLane);
@@ -127,8 +147,12 @@ class ASEWindow {
   onSpeed(data) {
     if (!this.isActive) return;
     const { lane, speed, direction } = data;
-    const display = (direction === 'front' || lane <= 3) ? this.frontSpeed : this.rearSpeed;
-    display.textContent = String(speed).padStart(3, '0');
+    if (this.mode === 'LASER') {
+      this.frontSpeed.textContent = String(speed).padStart(3, '0');
+    } else {
+      const display = (direction === 'front' || lane <= 3) ? this.frontSpeed : this.rearSpeed;
+      display.textContent = String(speed).padStart(3, '0');
+    }
     this.sendNui('aseSpeedDetected', data);
   }
 
@@ -140,7 +164,8 @@ class ASEWindow {
     this.frontSpeed.textContent = '000';
     this.rearSpeed.textContent = '000';
     this.patrolSpeed.textContent = '000';
-    this.selectLane(null);
+    this.selectedLane = null;
+    this.laneButtons.forEach(btn => btn.classList.remove('active'));
   }
 
   sendNui(action, data = {}) {

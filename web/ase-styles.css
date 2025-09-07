@@ -45,6 +45,11 @@
   cursor: pointer;
 }
 
+#ase-window .ase-header #ase-mode-btn.laser {
+  background: rgba(0,150,255,0.3);
+  border-color: rgba(0,150,255,0.6);
+}
+
 #ase-window .ase-header .close-btn {
   font-size: 14px;
   line-height: 1;
@@ -90,6 +95,10 @@
   gap: 6px;
   padding: 8px 10px 10px;
   justify-content: center;
+}
+
+#ase-window .lane-selector.hidden {
+  display: none;
 }
 
 #ase-window .lane-btn {

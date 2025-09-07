@@ -8,6 +8,7 @@ class ASEWindow {
         this.patrolSpeed = 0;
         this.currentPlate = null;
         this.speedLimit = 35;
+        this.selectedLane = null;
         
         this.initializeElements();
         this.setupEventListeners();
@@ -28,12 +29,15 @@ class ASEWindow {
         this.plateGlyphs = document.getElementById('plate-glyphs');
         this.plateText = document.getElementById('plate-text');
         this.plateSource = document.getElementById('plate-source');
-        
+
         // Status indicators
         this.radarStatusDot = document.getElementById('radar-status-dot');
         this.laserStatusDot = document.getElementById('laser-status-dot');
         this.plateStatusDot = document.getElementById('plate-status-dot');
         this.patrolSpeedValue = document.getElementById('patrol-speed');
+
+        // Lane buttons
+        this.laneButtons = document.querySelectorAll('.lane-btn');
     }
 
     setupEventListeners() {
@@ -47,10 +51,18 @@ class ASEWindow {
             this.close();
         });
 
+        // Lane buttons
+        this.laneButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lane = parseInt(btn.dataset.lane);
+                this.selectLane(lane);
+            });
+        });
+
         // Keyboard controls
         document.addEventListener('keydown', (event) => {
             if (!this.isOpen) return;
-            
+
             switch (event.key.toLowerCase()) {
                 case 'escape':
                     this.close();
@@ -60,6 +72,14 @@ class ASEWindow {
                     break;
                 case 'l':
                     this.toggleLaserMode();
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                    this.selectLane(parseInt(event.key));
                     break;
             }
         });
@@ -176,11 +196,11 @@ class ASEWindow {
         this.isOpen = true;
         this.window.style.display = 'block';
         
-        // Position window in center if not positioned
+        // Position window at top center if not positioned
         if (!this.window.style.left && !this.window.style.top) {
             this.window.style.left = '50%';
-            this.window.style.top = '50%';
-            this.window.style.transform = 'translate(-50%, -50%)';
+            this.window.style.top = '20px';
+            this.window.style.transform = 'translateX(-50%)';
         }
         
         this.updateUI();
@@ -220,6 +240,24 @@ class ASEWindow {
         
         this.updateUI();
         this.sendNui('aseLaserToggle', { laserMode: this.isLaserMode });
+    }
+
+    selectLane(lane) {
+        if (lane < 1 || lane > 6) return;
+
+        // Toggle lane selection
+        if (this.selectedLane === lane) {
+            this.selectedLane = null;
+        } else {
+            this.selectedLane = lane;
+        }
+
+        // Update button states
+        this.laneButtons.forEach(btn => {
+            btn.classList.toggle('selected', parseInt(btn.dataset.lane) === this.selectedLane);
+        });
+
+        this.sendNui('aseLaneSelected', { lane: this.selectedLane });
     }
 
     onSpeedDetected(data) {
